@@ -1,0 +1,6 @@
+.env
+.venv
+.Vector_database
+.idea
+.__pycache__
+
