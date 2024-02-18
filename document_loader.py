@@ -4,15 +4,15 @@ from langchain_community.document_loaders import SeleniumURLLoader
 
 
 def load_docs(directory):
-  loader = DirectoryLoader(directory)
-  documents = loader.load()
-  return documents
+    loader = DirectoryLoader(directory)
+    documents = loader.load()
+    return documents
 
 
 def split_docs(documents, chunk_size=200, chunk_overlap=200):
-  text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-  docs = text_splitter.split_documents(documents)
-  return docs
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    docs = text_splitter.split_documents(documents)
+    return docs
 
 
 def scrape_text_from_url(url):
@@ -21,3 +21,8 @@ def scrape_text_from_url(url):
     docs = split_docs(data)
     return docs
 
+
+def scrape_text_from_doc(directory):
+    documents = load_docs(directory)
+    docs = split_docs(documents)
+    return docs

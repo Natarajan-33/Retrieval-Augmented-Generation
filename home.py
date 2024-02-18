@@ -29,6 +29,8 @@ data_source = st.sidebar.radio(
 
 if data_source == "URL":
     url = st.sidebar.text_input("Enter the url of the document")
+elif data_source == "Local pdf files":
+    path = st.sidebar.text_input("Enter the local directory of the document")
 
 
 button = st.sidebar.button("Update Database")
@@ -36,7 +38,8 @@ if button and (url or path):
     with st.spinner("Updating Database..."):
         if url:
             corpusData = scrape_text_from_url(url)
-
+        if path:
+            corpusData = scrape_text_from_doc(path)
         # st.write(corpusData)
         st.session_state.db = addData(corpusData)
         st.session_state.database_loaded = True
