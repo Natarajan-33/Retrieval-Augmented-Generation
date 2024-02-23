@@ -5,8 +5,6 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Key Features](#KeyFeatures)
-- [Streamlit UI](#StreamlitUI)
 - [Installation](#Installation)
 - [Tools and Technologies](#ToolsandTechnologies)
 - [Troubleshooting](#Troubleshooting)
