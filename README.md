@@ -42,3 +42,32 @@ RAGExplorer harnesses the power of several cutting-edge tools and technologies:
 - **Gemini Pro LLM API:** Integrates with the API to provide responses from the knowledge source.
 - **Streamlit UI:** Offers an intuitive and visually appealing frontend for an enhanced user experience.
 
+Certainly! If users encounter an error related to the "pwd" import in the `pebblo.py` file, you can include instructions in your README to guide them on resolving the issue. Here's a section you can add:
+
+<font color="red"><h2>Troubleshooting</h2></font>
+
+### ImportError: No module named 'pwd' in pebblo.py
+
+If you encounter an `ImportError` related to the 'pwd' module in the `pebblo.py` file, you can try the following steps:
+
+1. **Locate the pebblo.py file:**
+   Navigate to the directory where the `pebblo.py` file is located. In a typical virtual environment setup, you can find it at:
+   ```
+   \venv\lib\site-packages\langchain_community\document_loaders\pebblo.py
+   ```
+
+2. **Comment out the problematic import statement:**
+   Open the `pebblo.py` file and find the line that says `import pwd`. To comment out this line, add a `#` at the beginning of the line. It should look like this:
+   ```python
+   # import pwd
+   ```
+
+3. **Save the file:**
+   Save the changes to the `pebblo.py` file.
+
+4. **Run the script again:**
+   Try running your script or application again and check if the error persists.
+
+By commenting out the 'pwd' import statement, you are temporarily excluding it from the code execution. However, keep in mind that modifying third-party packages directly may not be a long-term solution, and it's recommended to check for updates or seek guidance from the package maintainers.
+
+If the issue persists or if there are alternative solutions, consider updating your README with additional information or solutions provided by the package maintainers.
