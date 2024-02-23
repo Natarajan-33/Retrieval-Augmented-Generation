@@ -70,4 +70,3 @@ If you encounter an `ImportError` related to the 'pwd' module in the `pebblo.py`
 
 By commenting out the 'pwd' import statement, you are temporarily excluding it from the code execution. However, keep in mind that modifying third-party packages directly may not be a long-term solution, and it's recommended to check for updates or seek guidance from the package maintainers.
 
-If the issue persists or if there are alternative solutions, consider updating your README with additional information or solutions provided by the package maintainers.
