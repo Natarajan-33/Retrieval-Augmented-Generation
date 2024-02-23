@@ -24,7 +24,7 @@ To get started with RAGExplorer, follow these simple installation steps:
 
 ```bash
 # Clone the repository
-[git clone https://github.com/yourusername/RAGExplorer.git](https://github.com/Natarajan-33/Retrieval-Augmented-Generation.git)
+git clone https://github.com/Natarajan-33/Retrieval-Augmented-Generation.git
 cd RAGExplorer
 
 # Install dependencies
