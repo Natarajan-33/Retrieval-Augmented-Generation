@@ -2,6 +2,15 @@
 
 # Project Name: RAGExplorer
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Key Features](#KeyFeatures)
+- [Streamlit UI](#StreamlitUI)
+- [Installation](#Installation)
+- [Tools and Technologies](#ToolsandTechnologies)
+- [Troubleshooting](#Troubleshooting)
+
 ## Introduction
 
 RAGExplorer is a robust and versatile RAG (Retrieval-Augmented Generation) application designed to seamlessly handle PDF documents from various sources. With a powerful combination of tools and technologies, including Documentary Loader, Recursive Text Splitter, GPT-4 Embedding, Chroma DB, and integration with the Gemini Pro LLM API, RAGExplorer offers an intuitive interface for extracting valuable insights from your knowledge sources.
