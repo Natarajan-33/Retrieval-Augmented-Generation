@@ -44,6 +44,9 @@ RAGExplorer harnesses the power of several cutting-edge tools and technologies:
 
 Certainly! If users encounter an error related to the "pwd" import in the `pebblo.py` file, you can include instructions in your README to guide them on resolving the issue. Here's a section you can add:
 
+
+
+
 <font color="red"><h2>Troubleshooting</h2></font>
 
 ### ImportError: No module named 'pwd' in pebblo.py
