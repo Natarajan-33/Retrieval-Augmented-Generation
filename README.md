@@ -2,7 +2,8 @@
 
 # Project Name: RAGExplorer
 
-![RAGExplorer App](https://github.com/Natarajan-33/Retrieval-Augmented-Generation/assets/122523867/40250c66-fe14-44dc-8fcb-631d210b5265)
+![RAGExplorer App](https://github.com/Natarajan-33/Retrieval-Augmented-Generation/assets/122523867/2bba9181-6677-480c-ba3e-fb030cd3a2a7)
+
 
 
 ## Table of Contents
