@@ -12,7 +12,7 @@ st.set_page_config(page_title="RAG on our own data",layout="wide")
 st.sidebar.markdown("""
     <style>
         [data-testid="stSidebar"] {
-            background-color: #6b5c4b; /* Replace with your desired color code */
+            background-color: #15cbd1; /* Replace with your desired color code */
         }
     </style>
 
