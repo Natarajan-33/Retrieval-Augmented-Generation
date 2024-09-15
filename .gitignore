@@ -1,6 +1,6 @@
 .env
 .venv
-.Vector_database
+Vector_database/
 .idea
-.__pycache__
-
+__pycache__
+rag_env
