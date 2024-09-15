@@ -35,7 +35,7 @@ if "database_loaded" not in st.session_state:
         os.makedirs(folder_path)
 
 # Add content to the user interface.
-col1, col2, col3 = st.columns([0.5,3,0.5],gap="large")
+col1, col2, col3 = st.columns([1.1,3,0.5],gap="large")
 with col2:
     st.header("Answering questions based on personal data sources.")
 st.divider()
@@ -66,7 +66,7 @@ if button and (url or path):
 
 
 if st.session_state.database_loaded == False:
-    col1, col2, col3 = st.columns([1,3,1.5],gap="large")
+    col1, col2, col3 = st.columns([1.4,3,0.5], gap="large")
     with col2:
         st.subheader("Please feed the document source to proceed further")
 

@@ -1,5 +1,10 @@
 import google.generativeai as genai
-genai.configure(api_key="your API key")
+import os
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
+GEMINI_API_KEY =os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=GEMINI_API_KEY)
 
 # Create a prompt by combining the user query with the retrieved context.
 def create_prompt(context,query):
