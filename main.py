@@ -1,9 +1,9 @@
 import shutil
 import streamlit as st
 import os
-from vector_store import *
-import llm
-from document_loader import *
+from vector_db.vector_store import *
+from llm_model.llm import *
+from doc_loader.document_loader import *
 
 # Set page layout to wide
 st.set_page_config(page_title="RAG on our own data",layout="wide")
@@ -83,8 +83,8 @@ if st.session_state.database_loaded == True :
             for doc in context:
                 string = doc[0].page_content.replace("\n\n"," ")
                 cleaned_context += string + "\n\n"
-            prompt = llm.create_prompt(cleaned_context,question)
-            answer = llm.generate_answer(prompt)
+            prompt = create_prompt(cleaned_context,question)
+            answer = generate_answer(prompt)
             st.success("Answer: "+answer)
             st.divider()
             with st.container(height=600, border=False):
