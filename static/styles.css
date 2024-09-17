@@ -1,0 +1,16 @@
+ /* Changing color of the streamlit sidebar */
+[data-testid="stSidebar"] {
+    background-color: #15cbd1;
+    /* Replace with your desired color code */
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    /* To center the text */
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    /* Customize the color */
+}

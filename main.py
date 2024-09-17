@@ -6,17 +6,31 @@ from llm_model.llm import *
 from doc_loader.document_loader import *
 
 # Set page layout to wide
-st.set_page_config(page_title="RAG on our own data",layout="wide")
+st.set_page_config(page_title="TextLens", page_icon="assets/logo.png", layout="wide")
 
-#Changing color of the streamlit sidebar
-st.sidebar.markdown("""
-    <style>
-        [data-testid="stSidebar"] {
-            background-color: #15cbd1; /* Replace with your desired color code */
-        }
-    </style>
 
-""",unsafe_allow_html=True)
+# Load the CSS file
+def load_css(css_file):
+    with open(css_file) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+# Call the function to load the styles
+load_css("static\styles.css")
+
+
+# Now render the text with the CSS class applied
+st.sidebar.markdown(
+    """
+    <div class="header">
+        TextLens
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+st.sidebar.divider()
+
 
 url = False
 path = False
