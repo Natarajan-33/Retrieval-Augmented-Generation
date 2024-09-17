@@ -71,6 +71,7 @@ if st.session_state.database_loaded == False:
         st.subheader("Please feed the document source to proceed further")
 
 if st.session_state.database_loaded == True :
+     # If the database is loaded, allow the user to enter a question
     col1, col2, col3 = st.columns([5,3,0.5],gap="large")
     with col1:
         st.subheader("Please enter your question")
@@ -78,15 +79,18 @@ if st.session_state.database_loaded == True :
         button = st.button("Submit the question")
     if question and button:
         with st.spinner("Searching for the answer..."):
+            # Retrieve matching documents from the database based on the question
             context = find_match(question,15,st.session_state.db)
             cleaned_context = ""
             for doc in context:
                 string = doc[0].page_content.replace("\n\n"," ")
                 cleaned_context += string + "\n\n"
             prompt = create_prompt(cleaned_context,question)
+            # Generate an answer using the prompt
             answer = generate_answer(prompt)
             st.success("Answer: "+answer)
             st.divider()
+            # Provide an expandable container to show the actual retrieved documents
             with st.container(height=600, border=False):
                 st.expander("Click to expand actual retrieved documents").write(cleaned_context)
 
