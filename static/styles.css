@@ -7,10 +7,66 @@
 .header {
     display: flex;
     justify-content: center;
-    /* To center the text */
+    /* Center the text horizontally */
     margin-bottom: 20px;
-    font-size: 28px;
+    /* Add space below the text */
+    font-size: 38px;
+    /* Set the size of the text */
     font-weight: bold;
-    color: #333;
-    /* Customize the color */
+    /* Make the text bold */
+    color: #000;
+    /* Default text color - black */
+    text-shadow: 2px 2px 5px #888888;
+    /* Add a soft shadow behind the text */
+    background: none;
+    /* Remove gradient background to keep solid color */
+    padding: 10px;
+    /* Add space inside the text container */
+    border-radius: 10px;
+    /* Round the corners of the text container */
+    position: relative;
+    /* Enable absolute positioning for the pseudo-element */
+    transition: all 0.4s ease-in-out;
+    /* Smooth transition for hover effects */
+}
+
+.header:hover {
+    color: rgb(245, 171, 171);
+    /* Change the text color to red on hover */
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3), 0px 0px 10px rgb(12, 12, 11);
+    /* Add a glowing shadow effect in red on hover */
+    transform: scale(1.1);
+    /* Slightly increase the size of the text on hover */
+}
+
+.header::after {
+    content: '';
+    /* Create an empty block below the text */
+    display: block;
+    /* Make the pseudo-element a block-level element */
+    width: 40px;
+    /* Set the initial width of the decorative line */
+    height: 3px;
+    /* Set the height of the decorative line */
+    background-color: #000;
+    /* Default color of the line - black */
+    margin-top: 2px;
+    /* Add space between the text and the line */
+    position: absolute;
+    /* Position the line relative to the text */
+    bottom: -2px;
+    /* Position the line below the text */
+    left: 50%;
+    /* Center the line horizontally */
+    transform: translateX(-50%);
+    /* Center the line */
+    transition: width 0.3s ease, background-color 0.3s ease;
+    /* Smooth transition for the width and color change */
+}
+
+.header:hover::after {
+    width: 100px;
+    /* Expand the line on hover */
+    background-color: rgb(133, 99, 99);
+    /* Change the line color to red on hover */
 }
