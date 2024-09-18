@@ -61,9 +61,9 @@ data_source = st.sidebar.radio(
 
 #Input Data Source
 if data_source == "URL":
-    url = st.sidebar.text_input("Enter the url of the document")
+    url = st.sidebar.text_input("Enter the url of the document", key="url")
 elif data_source == "Local pdf files":
-    path = st.sidebar.text_input("Enter the local directory of the document")
+    path = st.sidebar.text_input("Enter the local directory of the document", key="path")
 
 # To fetch data from the source, chunk it, embed it, and store it in the database.
 button = st.sidebar.button("Update Database")
