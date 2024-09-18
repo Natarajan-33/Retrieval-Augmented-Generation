@@ -2,7 +2,6 @@
 
 ![TextLens App](https://github.com/user-attachments/assets/fc0b1c90-b76e-4f1b-a09a-667ccdaaf5e3)
 
-
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -14,7 +13,6 @@
   - [1. Installation Error with ChromaDB](#1-installation-error-with-chromadb)
   - [2. ImportError: No module named 'pwd' in pebblo.py](#2-importerror-no-module-named-pwd-in-pebblopy)
 - [Contributing](#contributing)
-
 
 ## Introduction
 
@@ -63,7 +61,7 @@ TextLens harnesses the power of several cutting-edge tools and technologies:
 - **Recursive Text Splitter:** Splits documents into chunks recursively for efficient processing.
 - **GPT-4 Embeddings:** Embeds document chunks into vectors for enhanced analysis.
 - **ChromaDB:** Stores vectors for quick and reliable data retrieval.
-- **Gemini Pro LLM API:** Integrates with the API to provide responses from the knowledge source.
+- **Gemini Pro LLM API:** Although we have chosen to integrate with Gemini Pro LLM API for its free availability, we recommend considering GPT models, which tend to offer better performance in many cases.
 - **Streamlit UI:** Offers an intuitive and visually appealing frontend for an enhanced user experience.
 
 ## Troubleshooting
