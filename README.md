@@ -1,42 +1,55 @@
-# Retrieval-Augmented-Generation
+# TextLens: Retrieval-Augmented Generation Application
 
-# Project Name: RAGExplorer
-
-![RAGExplorer App](https://github.com/Natarajan-33/Retrieval-Augmented-Generation/assets/122523867/2bba9181-6677-480c-ba3e-fb030cd3a2a7)
-
+![TextLens App](https://github.com/user-attachments/assets/fc0b1c90-b76e-4f1b-a09a-667ccdaaf5e3)
 
 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Installation](#Installation)
-- [Tools and Technologies](#ToolsandTechnologies)
-- [Troubleshooting](#Troubleshooting)
+  - [Key Features](#key-features)
+  - [Streamlit UI](#streamlit-ui)
+- [Installation](#installation)
+- [Tools and Technologies](#tools-and-technologies)
+- [Troubleshooting](#troubleshooting)
+  - [1. Installation Error with ChromaDB](#1-installation-error-with-chromadb)
+  - [2. ImportError: No module named 'pwd' in pebblo.py](#2-importerror-no-module-named-pwd-in-pebblopy)
+- [Contributing](#contributing)
+
 
 ## Introduction
 
-RAGExplorer is a robust and versatile RAG (Retrieval-Augmented Generation) application designed to seamlessly handle PDF documents from various sources. With a powerful combination of tools and technologies, including Documentary Loader, Recursive Text Splitter, GPT-4 Embedding, Chroma DB, and integration with the Gemini Pro LLM API, RAGExplorer offers an intuitive interface for extracting valuable insights from your knowledge sources.
+TextLens is a robust and versatile Retrieval-Augmented Generation (RAG) application designed to seamlessly handle PDF documents from various sources. By combining powerful tools and technologies—including Document Loaders, Recursive Text Splitter, GPT-4 Embeddings, ChromaDB, and integration with the Gemini Pro LLM API—TextLens offers an intuitive interface for extracting valuable insights from your knowledge sources.
 
 ### Key Features
 
-- **URL and Local Path Support:** RAGExplorer accommodates both URL and local path inputs for PDF documents, providing flexibility in data sourcing.
-  
-- **Vector DB Creation:** The application efficiently creates a vector database from the loaded data, enabling efficient storage and retrieval of information.
-
-- **Interactive Querying:** Users can leverage RAGExplorer to query over the provided data. The Gemini Pro LLM API responds with valuable insights, enhancing the depth of knowledge exploration.
+- **URL and Local Path Support:** Accommodates both URL and local path inputs for PDF documents, providing flexibility in data sourcing.
+- **Vector Database Creation:** Efficiently creates a vector database from the loaded data, enabling quick storage and retrieval of information.
+- **Interactive Querying:** Allows users to query over the provided data. The Gemini Pro LLM API responds with valuable insights, enhancing knowledge exploration.
 
 ### Streamlit UI
 
-RAGExplorer comes equipped with a Streamlit-based user interface, ensuring a user-friendly experience while interacting with the application. The streamlined design facilitates easy navigation and efficient utilization of the application's capabilities.
+TextLens comes equipped with a Streamlit-based user interface, ensuring a user-friendly experience while interacting with the application. The streamlined design facilitates easy navigation and efficient utilization of the application's capabilities.
 
 ## Installation
 
-To get started with RAGExplorer, follow these simple installation steps:
+To get started with TextLens, follow these steps:
 
 ```bash
 # Clone the repository
 git clone https://github.com/Natarajan-33/Retrieval-Augmented-Generation.git
-cd RAGExplorer
+cd Retrieval-Augmented-Generation
+
+# Create a virtual environment (recommended)
+python -m venv rag_env
+
+# Activate the virtual environment
+# On Windows:
+rag_env\Scripts\activate
+# On macOS/Linux:
+source rag_env/bin/activate
+
+# Upgrade pip
+pip install --upgrade pip
 
 # Install dependencies
 pip install -r requirements.txt
@@ -44,43 +57,115 @@ pip install -r requirements.txt
 
 ## Tools and Technologies
 
-RAGExplorer harnesses the power of several cutting-edge tools and technologies:
+TextLens harnesses the power of several cutting-edge tools and technologies:
 
-- **Documentary Loader:** Loads PDF documents seamlessly.
+- **Document Loaders:** Load PDF documents seamlessly.
 - **Recursive Text Splitter:** Splits documents into chunks recursively for efficient processing.
-- **GPT-4 Embedding:** Embeds document chunks into vectors for enhanced analysis.
-- **Chroma DB:** Stores vectors for quick and reliable data retrieval.
+- **GPT-4 Embeddings:** Embeds document chunks into vectors for enhanced analysis.
+- **ChromaDB:** Stores vectors for quick and reliable data retrieval.
 - **Gemini Pro LLM API:** Integrates with the API to provide responses from the knowledge source.
 - **Streamlit UI:** Offers an intuitive and visually appealing frontend for an enhanced user experience.
 
-Certainly! If users encounter an error related to the "pwd" import in the `pebblo.py` file, you can include instructions in your README to guide them on resolving the issue. Here's a section you can add:
+## Troubleshooting
 
+### 1. Installation Error with ChromaDB
 
+If you encounter an error related to installing `chroma-hnswlib` while setting up ChromaDB, similar to:
 
+```
+ERROR: Failed building wheel for chroma-hnswlib
+...
+fatal error C1083: Cannot open include file: 'crtdbg.h': No such file or directory
+```
 
-<font color="red"><h2>Troubleshooting</h2></font>
+**Cause:** This error occurs because `chroma-hnswlib` requires compiling C++ extensions, which need Microsoft Visual C++ Build Tools on Windows.
 
-### ImportError: No module named 'pwd' in pebblo.py
+#### **Solution: Install Microsoft Visual C++ Build Tools.** [Look at the issue in GitHub](https://github.com/chroma-core/chroma/issues/189#issuecomment-1454418844)
 
-If you encounter an `ImportError` related to the 'pwd' module in the `pebblo.py` file, you can try the following steps:
+1. **Download Build Tools:**
 
-1. **Locate the pebblo.py file:**
-   Navigate to the directory where the `pebblo.py` file is located. In a typical virtual environment setup, you can find it at:
+   - Visit the [Microsoft Visual C++ Build Tools download page](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+   - Click on **"Download Build Tools"**.
+
+2. **Install Required Components:**
+
+   - Run the installer (`vs_buildtools.exe`).
+   - Select **"Desktop development with C++"** workload.
+   - select **"MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)"** and the **"Windows 10 SDK"** or **"Windows 11 SDK"** as per your system.
+   - Click **"Install"** and wait for the installation to complete.
+
+3. **Restart Your Computer:**
+
+   - It's recommended to restart your computer after installation.
+
+4. **Re-attempt Installation:**
+
+   - Activate your virtual environment if not already active.
+   - Run:
+
+     ```bash
+     pip install chromadb
+     ```
+
+#### **Alternative Solution: Use FAISS Instead of ChromaDB**
+
+If the problem persists after installing the build tools, you can use FAISS as an alternative vector store.
+
+1. **Install FAISS:**
+
+   ```bash
+   pip install faiss-cpu
    ```
-   \venv\lib\site-packages\langchain_community\document_loaders\pebblo.py
+
+2. **Modify Your Code:**
+
+   - Update your code to use FAISS instead of ChromaDB for vector storage.
+   - Refer to the [FAISS documentation](https://github.com/facebookresearch/faiss) for more details.
+
+### 2. ImportError: No module named 'pwd' in pebblo.py
+
+If you encounter an `ImportError` related to the `pwd` module in the `pebblo.py` file:
+
+```
+ImportError: No module named 'pwd'
+```
+
+**Cause:** This error occurs because the `pwd` module is specific to Unix/Linux systems and is not available on Windows.
+
+#### **Solution: Comment Out the Problematic Import**
+
+1. **Locate the `pebblo.py` File:**
+
+   The file is typically located at:
+
+   ```
+   <your_virtual_env>\lib\site-packages\langchain_community\document_loaders\pebblo.py
    ```
 
-2. **Comment out the problematic import statement:**
-   Open the `pebblo.py` file and find the line that says `import pwd`. To comment out this line, add a `#` at the beginning of the line. It should look like this:
+2. **Comment Out the `import pwd` Line:**
+
+   Open `pebblo.py` in a text editor and locate the line:
+
+   ```python
+   import pwd
+   ```
+
+   Add a `#` at the beginning to comment it out:
+
    ```python
    # import pwd
    ```
 
-3. **Save the file:**
-   Save the changes to the `pebblo.py` file.
+3. **Save the File:**
 
-4. **Run the script again:**
-   Try running your script or application again and check if the error persists.
+   Save the changes to `pebblo.py`.
 
-By commenting out the 'pwd' import statement, you are temporarily excluding it from the code execution. However, keep in mind that modifying third-party packages directly may not be a long-term solution, and it's recommended to check for updates or seek guidance from the package maintainers.
+4. **Run Your Application Again:**
 
+   Try running your application to see if the error is resolved.
+
+**Note:** Modifying third-party library code is generally not recommended as a long-term solution. Check for updates to the `langchain_community` package or consider reporting the issue to the maintainers.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
