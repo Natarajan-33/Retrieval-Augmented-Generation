@@ -1,6 +1,8 @@
 # TextLens: Retrieval-Augmented Generation Application
 
-![TextLens App](https://github.com/user-attachments/assets/fc0b1c90-b76e-4f1b-a09a-667ccdaaf5e3)
+![TextLens App](https://github.com/user-attachments/assets/271338ea-6ec5-40f0-b545-116b8a884f13)
+
+
 
 ## Table of Contents
 
