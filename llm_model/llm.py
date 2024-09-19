@@ -7,16 +7,17 @@ load_dotenv(override=True)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
-def create_prompt(context: str, query: str) -> str:
+def create_prompt_with_history(context: str, query: str, history: list[dict]) -> str:
     """
-    Create a prompt by combining the user query with the retrieved context.
+    Create a prompt by combining the user query, conversation history, and the retrieved context.
 
     Args:
         context (str): The context to be included in the prompt.
-        query (str): The user's query.
+        query (str): The user's current query.
+        history (list[dict]): The conversation history.
 
     Returns:
-        str: The formatted prompt string.
+        str: The formatted prompt string including the conversation history.
     """
     header = (
         "Please carefully respond to the prompts based on the provided context. "
@@ -26,9 +27,24 @@ def create_prompt(context: str, query: str) -> str:
         "ensures the accuracy and relevance of the responses. Never provide information "
         "that is not grounded in the available context."
     )
-    return (
-        f"Assistant behavior : {header} \n\n Provided context : {context}  \n\n  User Prompt : {query} "
+    
+    # Build the conversation history
+    history_text = ""
+    for message in history:
+        role = "User" if message['role'] == 'user' else "Assistant"
+        content = message['content']
+        history_text += f"{role}: {content}\n"
+    
+    # Combine everything into the prompt
+    prompt = (
+        f"Assistant behavior:\n{header}\n\n"
+        f"Provided context:\n{context}\n\n"
+        f"Conversation history:\n{history_text}\n"
+        f"User Prompt:\n{query}"
     )
+    
+    return prompt
+
 
 def generate_answer(prompt: str) -> str:
     """

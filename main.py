@@ -51,7 +51,7 @@ if "database_loaded" not in st.session_state:
 # Add content to the user interface.
 col1, col2, col3 = st.columns([1.1,3,0.5],gap="large")
 with col2:
-    st.header("Answering questions based on personal data sources.")
+    st.header("Your Personalized AI Chatbot Assistant.🤖")
 st.divider()
 
 st.sidebar.subheader("Choose the data source")
@@ -84,29 +84,50 @@ if st.session_state.database_loaded == False:
     with col2:
         st.subheader("Please feed the document source to proceed further")
 
-if st.session_state.database_loaded == True :
-     # If the database is loaded, allow the user to enter a question
-    col1, col2, col3 = st.columns([5,3,0.5],gap="large")
-    with col1:
-        st.subheader("Please enter your question")
-        question = st.text_input("",label_visibility="collapsed")
-        button = st.button("Submit the question")
-    if question and button:
+if st.session_state.database_loaded == True:
+    # Initialize messages if not already in session_state
+    if 'messages' not in st.session_state:
+        st.session_state.messages = []
+    
+    # Display the chat messages
+    for message in st.session_state.messages:
+        if message['role'] == 'user':
+            st.chat_message("user").markdown(message['content'])
+        else:
+            st.chat_message("assistant").markdown(message['content'])
+    
+    # Get user input via the chat input UI element
+    question = st.chat_input("Please enter your question")
+    if question:
+        # Add user's message to chat history
+        st.session_state.messages.append({'role': 'user', 'content': question})
+        # Display user's message
+        st.chat_message("user").markdown(question)
+        
         with st.spinner("Searching for the answer..."):
             # Retrieve matching documents from the database based on the question
-            context = find_match(question,15,st.session_state.db)
+            context = find_match(question, 15, st.session_state.db)
             cleaned_context = ""
             for doc in context:
-                string = doc[0].page_content.replace("\n\n"," ")
+                string = doc[0].page_content.replace("\n\n", " ")
                 cleaned_context += string + "\n\n"
-            prompt = create_prompt(cleaned_context,question)
+            
+            # Prepare the prompt, including the last 7 messages for context
+            history = st.session_state.messages[-7:]
+            prompt = create_prompt_with_history(cleaned_context, question, history)
+            
             # Generate an answer using the prompt
             answer = generate_answer(prompt)
-            st.success("Answer: "+answer)
+            # Add assistant's message to chat history
+            st.session_state.messages.append({'role': 'assistant', 'content': answer})
+            # Display assistant's message
+            st.chat_message("assistant").markdown(answer)
+            
             st.divider()
             # Provide an expandable container to show the actual retrieved documents
-            with st.container(height=600, border=False):
-                st.expander("Click to expand actual retrieved documents").write(cleaned_context)
+            with st.expander("Click to expand actual retrieved documents"):
+                st.write(cleaned_context)
+
 
             
 
