@@ -14,6 +14,11 @@ def load_css(css_file):
     with open(css_file) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+#Function to clear the chat history
+def clear_chat():
+    st.session_state.messages = []
+    render_messages()
+
 # Call the function to load the styles
 load_css("static\styles.css")
 
@@ -44,12 +49,14 @@ if "database_loaded" not in st.session_state:
     st.session_state.database_loaded = False
     folder_path = "./Vector_database"
     if os.path.exists(folder_path):
+        # if st.session_state.db is not None:
+        #     st.session_state.db.close()
         shutil.rmtree(folder_path)
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
 
 # Add content to the user interface.
-col1, col2, col3 = st.columns([1.1,3,0.5],gap="large")
+col1, col2, col3 = st.columns([1.4,3,0.5],gap="large")
 with col2:
     st.header("Your Personalized AI Chatbot Assistant.🤖")
 st.divider()
@@ -57,12 +64,12 @@ st.divider()
 st.sidebar.subheader("Choose the data source")
 data_source = st.sidebar.radio(
     '',
-    ('URL','Local pdf files'), label_visibility="collapsed")
+    ('URL','Local PDF/Doc files'), label_visibility="collapsed")
 
 #Input Data Source
 if data_source == "URL":
     url = st.sidebar.text_input("Enter the url of the document", key="url")
-elif data_source == "Local pdf files":
+elif data_source == "Local PDF/Doc files":
     path = st.sidebar.text_input("Enter the local directory of the document", key="path")
 
 # To fetch data from the source, chunk it, embed it, and store it in the database.
@@ -90,12 +97,14 @@ if st.session_state.database_loaded == True:
         st.session_state.messages = []
     
     # Display the chat messages
-    for message in st.session_state.messages:
-        if message['role'] == 'user':
-            st.chat_message("user").markdown(message['content'])
-        else:
-            st.chat_message("assistant").markdown(message['content'])
-    
+    def render_messages():
+        for message in st.session_state.messages:
+            if message['role'] == 'user':
+                st.chat_message("user").markdown(message['content'])
+            else:
+                st.chat_message("assistant").markdown(message['content'])
+
+    render_messages()
     # Get user input via the chat input UI element
     question = st.chat_input("Please enter your question")
     if question:
@@ -127,6 +136,12 @@ if st.session_state.database_loaded == True:
             # Provide an expandable container to show the actual retrieved documents
             with st.expander("Click to expand actual retrieved documents"):
                 st.write(cleaned_context)
+
+    if len(st.session_state.messages)>0:
+        st.sidebar.divider()
+        if st.sidebar.button("Clear Chat", on_click=clear_chat):
+            pass
+
 
 
             
