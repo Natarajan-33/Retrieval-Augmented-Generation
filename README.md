@@ -1,8 +1,6 @@
-# TextLens: Retrieval-Augmented Generation Application
+# TextLens: Retrieval-Augmented Chatbot Application
 
 ![TextLens App](https://github.com/user-attachments/assets/271338ea-6ec5-40f0-b545-116b8a884f13)
-
-
 
 ## Table of Contents
 
@@ -18,17 +16,17 @@
 
 ## Introduction
 
-TextLens is a robust and versatile Retrieval-Augmented Generation (RAG) application designed to seamlessly handle PDF documents from various sources. By combining powerful tools and technologies—including Document Loaders, Recursive Text Splitter, GPT-4 Embeddings, ChromaDB, and integration with the Gemini Pro LLM API—TextLens offers an intuitive interface for extracting valuable insights from your knowledge sources.
+TextLens is a robust and versatile Retrieval-Augmented Chatbot application designed to seamlessly handle text extraction from various sources, including URLs, PDF documents, and Word documents. By combining powerful tools and technologies—such as Document Loaders, Recursive Text Splitter, GPT-4 Embeddings, ChromaDB, and integration with the Gemini Pro LLM API—TextLens offers an intuitive chatbot interface for extracting valuable insights from your personal knowledge sources.
 
 ### Key Features
 
+- **Chatbot:** TextLens offers an interactive way to engage with your data. The chatbot remembers historical conversations, enabling contextual and continuous interactions.
 - **URL and Local Path Support:** Accommodates both URL and local path inputs for PDF documents, providing flexibility in data sourcing.
 - **Vector Database Creation:** Efficiently creates a vector database from the loaded data, enabling quick storage and retrieval of information.
-- **Interactive Querying:** Allows users to query over the provided data. The Gemini Pro LLM API responds with valuable insights, enhancing knowledge exploration.
 
 ### Streamlit UI
 
-TextLens comes equipped with a Streamlit-based user interface, ensuring a user-friendly experience while interacting with the application. The streamlined design facilitates easy navigation and efficient utilization of the application's capabilities.
+TextLens comes equipped with a Streamlit-based user interface, ensuring a user-friendly experience while interacting with the chatbot. The streamlined design facilitates easy navigation and efficient utilization of the application's capabilities, including viewing conversation history and accessing retrieved documents through expandable sections.
 
 ## Installation
 
