@@ -4,23 +4,41 @@ import os
 from vector_db.vector_store import *
 from llm_model.llm import *
 from doc_loader.document_loader import *
+from utils.helpers import *
+import logging
 
 # Set page layout to wide
 st.set_page_config(page_title="TextLens", page_icon="assets/logo.png", layout="wide")
 
 
+
+setup_logging('logs/textlens_logs.log')
+
 # Load the CSS file
 def load_css(css_file):
-    with open(css_file) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    try:
+        with open(css_file) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        logging.info(f"CSS file '{css_file}' loaded successfully. fn=load_css")
+    except Exception as e:
+        logging.error(f"Error loading CSS file '{css_file}'. fn=load_css. Error: {e}")
 
 #Function to clear the chat history
 def clear_chat():
     st.session_state.messages = []
     render_messages()
+    logging.info("Chat history cleared successfully.fn=clear_chat")
 
-# Call the function to load the styles
-load_css("static\styles.css")
+# Initialize a database variable in the session state.
+if "db" not in st.session_state:
+    st.session_state.db = None
+if "style_loaded" not in st.session_state:
+    st.session_state.style_loaded = False
+
+if not st.session_state.style_loaded:
+    load_css("static\styles.css")
+    st.session_state.style_loaded = True
+
 
 
 # Now render the text with the CSS class applied
@@ -33,27 +51,22 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-
 st.sidebar.divider()
-
 
 url = False
 path = False
 
-# Initialize a database variable in the session state.
-if "db" not in st.session_state:
-    st.session_state.db = None
 
 #Creating "Vector_database" folder to store embeddings
 if "database_loaded" not in st.session_state:
     st.session_state.database_loaded = False
     folder_path = "./Vector_database"
     if os.path.exists(folder_path):
-        # if st.session_state.db is not None:
-        #     st.session_state.db.close()
         shutil.rmtree(folder_path)
+        logging.info(f"Existing folder '{folder_path}' removed successfully. ")
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
+        logging.info(f"Folder '{folder_path}' created successfully.")
 
 # Add content to the user interface.
 col1, col2, col3 = st.columns([1.4,3,0.5],gap="large")
@@ -84,6 +97,7 @@ if button and (url or path):
         st.session_state.db = addData(corpusData)
         st.session_state.database_loaded = True
         st.success("Database Updated")
+        logging.info(f"Database updated with data gathered from the given data source")
 
 
 if st.session_state.database_loaded == False:
@@ -114,6 +128,7 @@ if st.session_state.database_loaded == True:
         st.chat_message("user").markdown(question)
         
         with st.spinner("Searching for the answer..."):
+            logging.info("Searching for the answer...")
             # Retrieve matching documents from the database based on the question
             context = find_match(question, 15, st.session_state.db)
             cleaned_context = ""
@@ -136,6 +151,7 @@ if st.session_state.database_loaded == True:
             # Provide an expandable container to show the actual retrieved documents
             with st.expander("Click to expand actual retrieved documents"):
                 st.write(cleaned_context)
+            logging.info("Answer generated successfully...")
 
     if len(st.session_state.messages)>0:
         st.sidebar.divider()

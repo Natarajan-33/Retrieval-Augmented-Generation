@@ -3,6 +3,8 @@ from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import SeleniumURLLoader
 from langchain.schema import Document
+import logging
+
 
 def load_docs(directory: str) -> List[Document]:
     """
@@ -14,9 +16,14 @@ def load_docs(directory: str) -> List[Document]:
     Returns:
         List[Document]: A list of loaded documents.
     """
-    loader = DirectoryLoader(directory)
-    documents = loader.load()
-    return documents
+    try:
+        loader = DirectoryLoader(directory)
+        documents = loader.load()
+        logging.info(f"Documents loaded successfully. fn=load_docs, directory={directory}, num_documents={len(documents)}")
+        return documents
+    except Exception as e:
+        logging.error(f"Error loading documents. fn=load_docs, directory={directory}, error={e}")
+        raise  # Re-raise the exception after logging
 
 def split_docs(documents: List[Document], chunk_size: int = 1000, chunk_overlap: int = 200) -> List[Document]:
     """
@@ -30,9 +37,14 @@ def split_docs(documents: List[Document], chunk_size: int = 1000, chunk_overlap:
     Returns:
         List[Document]: A list of split document chunks.
     """
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-    docs = text_splitter.split_documents(documents)
-    return docs
+    try:
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        docs = text_splitter.split_documents(documents)
+        logging.info(f"Documents split into chunks. fn=split_docs, chunk_size={chunk_size}, chunk_overlap={chunk_overlap}, num_chunks={len(docs)}")
+        return docs
+    except Exception as e:
+        logging.error(f"Error splitting documents. fn=split_docs, chunk_size={chunk_size}, chunk_overlap={chunk_overlap}, error={e}")
+        raise  # Re-raise the exception after logging
 
 def scrape_text_from_url(url: str) -> List[Document]:
     """
@@ -44,10 +56,16 @@ def scrape_text_from_url(url: str) -> List[Document]:
     Returns:
         List[Document]: A list of documents containing the scraped text chunks.
     """
-    loader = SeleniumURLLoader(urls=[url])
-    data = loader.load()
-    docs = split_docs(data)
-    return docs
+    try:
+        loader = SeleniumURLLoader(urls=[url])
+        data = loader.load()
+        logging.info(f"Text scraped from URL successfully. fn=scrape_text_from_url, url={url}, num_documents={len(data)}")
+        docs = split_docs(data)
+        logging.info(f"Scraped text split into chunks. fn=scrape_text_from_url, url={url}, num_chunks={len(docs)}")
+        return docs
+    except Exception as e:
+        logging.error(f"Error scraping text from URL. fn=scrape_text_from_url, url={url}, error={e}")
+        raise  # Re-raise the exception after logging
 
 def scrape_text_from_doc(directory: str) -> List[Document]:
     """
@@ -59,6 +77,12 @@ def scrape_text_from_doc(directory: str) -> List[Document]:
     Returns:
         List[Document]: A list of documents containing the text chunks from the directory.
     """
-    documents = load_docs(directory)
-    docs = split_docs(documents)
-    return docs
+    try:
+        documents = load_docs(directory)
+        logging.info(f"Documents scraped from directory successfully. fn=scrape_text_from_doc, directory={directory}, num_documents={len(documents)}")
+        docs = split_docs(documents)
+        logging.info(f"Scraped documents split into chunks. fn=scrape_text_from_doc, directory={directory}, num_chunks={len(docs)}")
+        return docs
+    except Exception as e:
+        logging.error(f"Error scraping text from documents in directory. fn=scrape_text_from_doc, directory={directory}, error={e}")
+        raise  # Re-raise the exception after logging

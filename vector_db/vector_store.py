@@ -3,6 +3,9 @@ from langchain_chroma import Chroma
 from langchain_community.embeddings import GPT4AllEmbeddings
 from typing import List, Tuple
 from langchain.schema import Document
+import logging
+
+
 
 def addData(corpusData: List[Document]) -> Chroma:
     """
@@ -14,10 +17,19 @@ def addData(corpusData: List[Document]) -> Chroma:
     Returns:
         Chroma: A Chroma database instance containing the embedded documents.
     """
-    if "embedd" not in st.session_state:
-        st.session_state.embedd = GPT4AllEmbeddings()
-    db = Chroma.from_documents(corpusData, st.session_state.embedd, persist_directory="./Vector_database/chroma_db1")
-    return db
+    try:
+        if "embedd" not in st.session_state:
+            st.session_state.embedd = GPT4AllEmbeddings()
+            logging.info("Initialized GPT4AllEmbeddings. fn=addData")
+
+        # Create or update the Chroma database with the corpus data
+        db = Chroma.from_documents(corpusData, st.session_state.embedd, persist_directory="./Vector_database/chroma_db1")
+        logging.info(f"Chroma database created with {len(corpusData)} documents. fn=addData, directory=./Vector_database/chroma_db1")
+        return db
+
+    except Exception as e:
+        logging.error(f"Error while adding data to Chroma database. fn=addData, error={e}")
+        raise  # Re-raise the exception after logging
 
 def find_match(query: str, k: int, db: Chroma) -> List[Tuple[Document, float]]:
     """
@@ -31,5 +43,12 @@ def find_match(query: str, k: int, db: Chroma) -> List[Tuple[Document, float]]:
     Returns:
         List[Tuple[Document, float]]: A list of tuples containing the matching documents and their similarity scores.
     """
-    retrieved_doc = db.similarity_search_with_score(query, k=k)
-    return retrieved_doc
+    try:
+        # Perform similarity search
+        retrieved_doc = db.similarity_search_with_score(query, k=k)
+        logging.info(f"Similarity search performed. fn=find_match, query='{query}', k={k}, matches_found={len(retrieved_doc)}")
+        return retrieved_doc
+
+    except Exception as e:
+        logging.error(f"Error during similarity search. fn=find_match, query='{query}', error={e}")
+        raise  # Re-raise the exception after logging

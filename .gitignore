@@ -4,3 +4,4 @@ Vector_database/
 .idea
 __pycache__
 rag_env
+logs
